@@ -389,6 +389,19 @@ class MCU_NRF51Code:
         with open(binf.replace(".bin", ".hex"), "w") as f:
             binh.tofile(f, format='hex')
 
+class MCU_NRF51OTACode:
+    @staticmethod
+    def binary_hook(t_self, resources, elf, binf):
+
+        # save the bin out
+        with open(binf.replace(".hex", ".bin"), "w") as outbin:
+            with open(binf, "r") as part:
+                outbin.write(part.read())
+
+        #call the usual nrf hook
+        MCU_NRF51Code.binary_hook(t_self, resources, elf, binf)
+
+
 ########################################################################################################################
 
 # Instantiate all public targets
